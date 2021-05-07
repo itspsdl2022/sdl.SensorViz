@@ -1,5 +1,6 @@
 package jp.ac.titech.itpro.sdl.sensorviz;
 
+import android.annotation.SuppressLint;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private final static String TAG = MainActivity.class.getSimpleName();
     private final static long GRAPH_REFRESH_PERIOD_MS = 20;
 
-    private static List<Integer> DELAYS = new ArrayList<>();
+    private static final List<Integer> DELAYS = new ArrayList<>();
     static {
         DELAYS.add(SensorManager.SENSOR_DELAY_FASTEST);
         DELAYS.add(SensorManager.SENSOR_DELAY_GAME);
@@ -141,6 +142,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         return super.onPrepareOptionsMenu(menu);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.d(TAG, "onOptionsItemSelected");
@@ -197,7 +199,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private String sensorTypeName(int sensorType) {
         try {
-            Class klass = Sensor.class;
+            Class<Sensor> klass = Sensor.class;
             for (Field field : klass.getFields()) {
                 String fieldName = field.getName();
                 if (fieldName.startsWith("TYPE_") && field.getInt(klass) == sensorType)
